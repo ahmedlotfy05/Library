@@ -1,5 +1,8 @@
 const myLibrary = [];
 
+const display = document.querySelector("#display");
+const newBook = document.querySelector("#new");
+
 function Book(bookTitle, bookAuthor, bookPages) {
 
     if (!new.target) {
@@ -35,3 +38,24 @@ function addBookToLibrary(bookTitle, bookAuthor, bookPages) {
     }
 
 }
+
+function displayBooks() {
+
+    for (let i = 0; i <= myLibrary.length; i++) {
+
+        display.textContent = myLibrary[i].info();
+
+    }
+
+}
+
+newBook.addEventListener("click", () => {
+
+    let bookTitle = prompt("Enter the book's title");
+    let bookAuthor = prompt("Enter the book's author");
+    let bookPages = prompt("Enter the number of pages");
+
+    addBookToLibrary(bookTitle, bookAuthor, bookPages);
+    displayBooks();
+
+})
