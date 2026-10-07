@@ -3,7 +3,7 @@ const myLibrary = [];
 const display = document.querySelector("#display");
 const newBook = document.querySelector("#new");
 
-function Book(bookTitle, bookAuthor, bookPages) {
+function Book(bookTitle, bookAuthor, bookPages, isRead = false) {
 
     if (!new.target) {
 
@@ -15,40 +15,70 @@ function Book(bookTitle, bookAuthor, bookPages) {
     this.bookTitle = bookTitle;
     this.bookAuthor = bookAuthor;
     this.bookPages = bookPages;
+    this.isRead = isRead;
 
-    this.info = function() {
-
-        return `Book ID = ${this.bookID}, ${this.bookTitle} by ${this.bookAuthor}, number of pages: ${this.bookPages}`;
-
-    };
 }
 
-function addBookToLibrary(bookTitle, bookAuthor, bookPages) {
+Book.prototype.info = function() {
 
-    myLibrary.push(new Book(bookTitle, bookAuthor, bookPages));
+    const readStatus = this.isRead ? "Read" : "Not read yet";
+    return `Book ID = ${this.bookID}, ${this.bookTitle} by ${this.bookAuthor}, pages: ${this.bookPages} — Status: ${readStatus}`;
 
+};
+
+Book.prototype.toggleRead = function() {
+
+    this.isRead = !this.isRead;
+
+};
+
+function addBookToLibrary(bookTitle, bookAuthor, bookPages, isRead) {
+
+    myLibrary.push(new Book(bookTitle, bookAuthor, bookPages, isRead));
+    
 }
 
 function displayBooks() {
 
-    display.innerHTML = ""; // Clear current display before re-rendering
+    display.innerHTML = "";
 
     for (let i = 0; i < myLibrary.length; i++) {
 
+        const book = myLibrary[i];
+
+        const bookCard = document.createElement("div");
         const bookDiv = document.createElement("p");
-        const deleteBookBtn = document.createElement("button");
+        const toggleReadBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
 
-        deleteBookBtn.textContent = "Delete"
-        bookDiv.textContent = myLibrary[i].info();
+        bookDiv.textContent = book.info();
+        
+        // Read status toggle button
+        toggleReadBtn.textContent = book.isRead ? "Mark as Unread" : "Mark as Read";
 
-        deleteBookBtn.addEventListener("click", () => {
-            
-            myLibrary.splice(i, 1);
+        toggleReadBtn.addEventListener("click", () => {
+
+            book.toggleRead();
+
             displayBooks();
+
         });
 
-        display.appendChild(bookDiv);
-        display.appendChild(deleteBookBtn);
+        // Delete button
+        deleteBtn.textContent = "Delete";
+
+        deleteBtn.addEventListener("click", () => {
+
+            myLibrary.splice(i, 1);
+
+            displayBooks();
+
+        });
+
+        bookCard.appendChild(bookDiv);
+        bookCard.appendChild(toggleReadBtn);
+        bookCard.appendChild(deleteBtn);
+        display.appendChild(bookCard);
 
     }
 
@@ -59,10 +89,11 @@ newBook.addEventListener("click", () => {
     let bookTitle = prompt("Enter the book's title");
     let bookAuthor = prompt("Enter the book's author");
     let bookPages = prompt("Enter the number of pages");
+    let isRead = confirm("Have you read this book");
 
     if (bookTitle && bookAuthor && bookPages) {
 
-        addBookToLibrary(bookTitle, bookAuthor, bookPages);
+        addBookToLibrary(bookTitle, bookAuthor, bookPages, isRead);
         displayBooks();
 
     }
