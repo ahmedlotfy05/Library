@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book(id, title, author, pages) {
+function Book(bookTitle, bookAuthor, bookPages) {
 
     if (!new.target) {
 
@@ -8,42 +8,27 @@ function Book(id, title, author, pages) {
 
     }
     
-    this.id = id.crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-
-    this.read = function(readYet) {
-
-        if (readYet == 0) {
-
-            return `Not read yet`;
-
-        }
-
-        else {
-
-            return `Read`;
-
-        }
-
-    };
+    this.bookID = crypto.randomUUID();
+    this.bookTitle = bookTitle;
+    this.bookAuthor = bookAuthor;
+    this.bookPages = bookPages;
 
     this.info = function() {
 
-        return `${this.title} by ${this.author}, number of pages: ${this.pages}, ${this.readYet()}`
+        return `Book ID = ${this.bookID}, ${this.bookTitle} by ${this.bookAuthor}, number of pages: ${this.bookPages}`
 
     };
 
 }
 
-function addBookToLibrary(id, title, author, pages) {
+function addBookToLibrary(bookTitle, bookAuthor, bookPages) {
 
-    for (i = 0; i < myLibrary.length; i++) {
+    for (let i = 0; i <= myLibrary.length; i++) {
 
-        if (myLibrary[i] != null) {
+        if (myLibrary[i] == null) {
 
-            myLibrary[i] = new Book(id, title, author, pages);
+            myLibrary[i] = new Book(bookTitle, bookAuthor, bookPages);
+            break;
 
         }
 
