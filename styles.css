@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
+
+:root {
+  --bg: #0c0d10;
+  --card-bg: #14161c;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(212, 175, 55, 0.25);
+  --gold: #d4af37;
+  --gold-dim: #997d26;
+  --text-main: #f1f2f6;
+  --text-muted: #8b8f9e;
+  --danger: #e05252;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 20% 90%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Header */
+#main {
+  font-family: 'Cinzel', serif;
+  font-size: 2.25rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+#main::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--gold-dim);
+}
+
+#container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* Add Book Trigger */
+#new {
+  font-family: 'Cinzel', serif;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 0.85rem 2.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#new:hover {
+  background: var(--gold);
+  color: #0c0d10;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Cards Showcase */
+#display {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 2rem;
+}
+
+/* Individual Book Card */
+#display > div {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2rem 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#display > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gold-dim);
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+#display > div:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+#display > div:hover::before {
+  opacity: 1;
+}
+
+/* Styling the raw info text block */
+#display > div > p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e2e4ea;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Buttons Group inside Cards */
+#display > div > button {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.65rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Read / Unread Status Button */
+#display > div > button:nth-of-type(1) {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 0.5rem;
+}
+
+#display > div > button:nth-of-type(1):hover {
+  border-color: var(--text-main);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Delete Button */
+#display > div > button:nth-of-type(2) {
+  background: transparent;
+  color: var(--danger);
+  border: 1px dashed rgba(224, 82, 82, 0.3);
+}
+
+#display > div > button:nth-of-type(2):hover {
+  background: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
