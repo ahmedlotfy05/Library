@@ -18,32 +18,37 @@ function Book(bookTitle, bookAuthor, bookPages) {
 
     this.info = function() {
 
-        return `Book ID = ${this.bookID}, ${this.bookTitle} by ${this.bookAuthor}, number of pages: ${this.bookPages}`
+        return `Book ID = ${this.bookID}, ${this.bookTitle} by ${this.bookAuthor}, number of pages: ${this.bookPages}`;
 
     };
-
 }
 
 function addBookToLibrary(bookTitle, bookAuthor, bookPages) {
 
-    for (let i = 0; i <= myLibrary.length; i++) {
-
-        if (myLibrary[i] == null) {
-
-            myLibrary[i] = new Book(bookTitle, bookAuthor, bookPages);
-            break;
-
-        }
-
-    }
+    myLibrary.push(new Book(bookTitle, bookAuthor, bookPages));
 
 }
 
 function displayBooks() {
 
-    for (let i = 0; i <= myLibrary.length; i++) {
+    display.innerHTML = ""; // Clear current display before re-rendering
 
-        display.textContent = myLibrary[i].info();
+    for (let i = 0; i < myLibrary.length; i++) {
+
+        const bookDiv = document.createElement("p");
+        const deleteBookBtn = document.createElement("button");
+
+        deleteBookBtn.textContent = "Delete"
+        bookDiv.textContent = myLibrary[i].info();
+
+        deleteBookBtn.addEventListener("click", () => {
+            
+            myLibrary.splice(i, 1);
+            displayBooks();
+        });
+
+        display.appendChild(bookDiv);
+        display.appendChild(deleteBookBtn);
 
     }
 
@@ -55,7 +60,11 @@ newBook.addEventListener("click", () => {
     let bookAuthor = prompt("Enter the book's author");
     let bookPages = prompt("Enter the number of pages");
 
-    addBookToLibrary(bookTitle, bookAuthor, bookPages);
-    displayBooks();
+    if (bookTitle && bookAuthor && bookPages) {
 
-})
+        addBookToLibrary(bookTitle, bookAuthor, bookPages);
+        displayBooks();
+
+    }
+
+});
